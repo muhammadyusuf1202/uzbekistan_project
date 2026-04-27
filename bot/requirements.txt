@@ -1,2 +1,6 @@
-aiogram==3.7.0
-aiohttp>=3.9.0
+fastapi
+uvicorn
+aiogram
+pydantic
+aiohttp
+# Agar boshqa kutubxonalar bo'lsa qo'shing (masalan: gspread, sqlalchemy)
