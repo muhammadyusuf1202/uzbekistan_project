@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Obuna Rejalari — O'zbekiston Ta'lim</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container hflex">
+    <a href="/dashboard" class="logo">🇺🇿 O'zbekiston Ta'lim</a>
+    <div class="hflex" style="gap:12px">
+      <span class="coin-mini">{{ "{:,}".format(user['coins']) }} 🪙</span>
+      <a href="/logout" class="btn btn-outline btn-sm">Chiqish</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="container">
+
+  <div class="plans-ph">
+    <h1>Obuna Rejalari</h1>
+    <p>Sizning coinlaringiz: <strong>{{ "{:,}".format(user['coins']) }} 🪙</strong></p>
+    {% if active_sub %}
+    <p style="color:#666;font-size:14px;margin-top:6px">
+      Joriy: <b>{{ plans[active_sub['plan_id']].emoji }}
+      {{ plans[active_sub['plan_id']].nomi }}</b>
+      — {{ active_sub['expires_at'] }} gacha
+    </p>
+    {% endif %}
+  </div>
+
+  <div class="plans-grid">
+
+    {% for plan_id, plan in plans.items() %}
+    <div class="plan-card plan-{{ plan_id.replace('_','-') }}
+      {% if plan_id == 'ultra_plus' %}plan-ultra{% endif %}
+      {% if plan_id == 'plus' %}plan-popular{% endif %}">
+
+      <div class="plan-glow plan-glow-{{ 'ultra' if plan_id=='ultra_plus' else plan_id.replace('_','-') }}"></div>
+
+      {% if plan_id == 'plus' %}<div class="popular-badge">Mashhur</div>{% endif %}
+      {% if plan_id == 'ultra_plus' %}<div class="ultra-badge">👑 Eng kuchli</div>{% endif %}
+      {% if active_sub and active_sub['plan_id'] == plan_id %}
+        <div class="active-now-badge">✅ Faol</div>
+      {% endif %}
+
+      <div class="plan-head">
+        <span class="plan-emoji">{{ plan.emoji }}</span>
+        <span class="plan-name">{{ plan.nomi }}</span>
+      </div>
+      <div class="plan-price">
+        <span class="pnum">{{ "{:,}".format(plan.narx_coin) }}</span>
+        <span class="punit">🪙 / oy</span>
+      </div>
+
+      <!-- Asosiy limitlar -->
+      <div class="limit-row">
+        <div class="lchip">
+          🎯 {% if plan.joker_daily == -1 %}Cheksiz joker
+          {% else %}{{ plan.joker_daily }} joker/kun{% endif %}
+        </div>
+        <div class="lchip">
+          🔁 {% if plan.quiz_retry == -1 %}Cheksiz qayta
+          {% else %}{{ plan.quiz_retry }}x qayta{% endif %}
+        </div>
+        <div class="lchip">🪙 +{{ plan.bonus_coin }}/kun</div>
+      </div>
+
+      <ul class="plan-feats">
+        {% for f in plan.imtiyozlar %}
+        <li>✓ {{ f }}</li>
+        {% endfor %}
+      </ul>
+
+      <div class="plan-action">
+        {% if user['coins'] >= plan.narx_coin %}
+          <form method="POST" action="/buy/{{ plan_id }}"
+                onsubmit="return confirm('{{ plan.narx_coin }} coin sarflanadi. Tasdiqlaysizmi?')">
+            <button type="submit"
+              class="plan-btn btn-{{ 'ultra' if plan_id=='ultra_plus' else plan_id.replace('_','-') }}">
+              {% if active_sub and active_sub['plan_id'] == plan_id %}
+                Yangilash — {{ "{:,}".format(plan.narx_coin) }} 🪙
+              {% else %}
+                Sotib olish — {{ "{:,}".format(plan.narx_coin) }} 🪙
+              {% endif %}
+            </button>
+          </form>
+        {% else %}
+          <div class="not-enough">
+            <span>Yetarli coin yo'q</span>
+            <small>Kerak: {{ "{:,}".format(plan.narx_coin) }} 🪙 &nbsp;·&nbsp;
+                   Sizda: {{ "{:,}".format(user['coins']) }} 🪙</small>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+    {% endfor %}
+
+  </div><!-- /plans-grid -->
+
+  <div class="earn-box">
+    <h3>💡 Qanday coin topish mumkin?</h3>
+    <ul>
+      <li>📝 Har bir quiz 5+ ball → ball × 10 coin</li>
+      <li>⭐ Barcha joylar 10/10 → +1000 coin/kun</li>
+      <li>💙 Pro obuna → +50 coin/kun bonus</li>
+      <li>💜 Plus obuna → +150 coin/kun bonus</li>
+      <li>👑 Ultra Plus → +500 coin/kun bonus</li>
+    </ul>
+  </div>
+
+</div>
+</main>
+
+<footer class="footer">
+  <div class="container"><p>🇺🇿 O'zbekiston Ta'lim Boti</p></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — O'zbekiston Ta'lim</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container hflex">
+    <div class="logo">🇺🇿 O'zbekiston Ta'lim</div>
+    <div class="hflex" style="gap:12px">
+      <span style="font-size:14px;color:#666">{{ user['first_name'] }}</span>
+      <a href="/logout" class="btn btn-outline btn-sm">Chiqish</a>
+    </div>
+  </div>
+</header>
+
+<main class="dash-main">
+  <div class="container">
+
+    <!-- Flash xabarlar -->
+    {% set success = request.query_params.get('success') %}
+    {% set error   = request.query_params.get('error') %}
+    {% if success %}
+      {% set p = plans[success] %}
+      <div class="alert alert-ok">
+        ✅ {{ p.emoji }} <b>{{ p.nomi }}</b> obunasi faollashtirildi! 30 kun davom etadi.
+      </div>
+    {% endif %}
+    {% if error == 'nocoin' %}
+      <div class="alert alert-err">
+        ❌ Yetarli coin yo'q! Kerak: {{ request.query_params.get('need','') }} 🪙 &nbsp;|&nbsp;
+        Sizda: {{ request.query_params.get('have','') }} 🪙
+      </div>
+    {% endif %}
+
+    <!-- Foydalanuvchi kartasi -->
+    <div class="user-card">
+      <div class="uavatar">{{ user['first_name'][0] | upper }}</div>
+      <div class="uinfo">
+        <h2>{{ user['first_name'] }} {{ user['last_name'] or '' }}</h2>
+        <p class="umeta">🏫 {{ user['school_grade'] }}-sinf &nbsp;·&nbsp; 🎂 {{ user['age'] }} yosh</p>
+        {% if active_plan %}
+          <span class="sub-pill"
+            style="background:{{ active_plan.rang_light }};color:{{ active_plan.rang_dark }}">
+            {{ active_plan.emoji }} {{ active_plan.nomi }} faol
+          </span>
+        {% endif %}
+      </div>
+      <div class="coin-box">
+        <div class="coin-num">{{ "{:,}".format(user['coins']) }}</div>
+        <div class="coin-lbl">🪙 coin</div>
+      </div>
+    </div>
+
+    <!-- Faol obuna -->
+    {% if active_sub and active_plan %}
+    <div class="active-sub"
+         style="border-color:{{ active_plan.rang }};background:{{ active_plan.rang_light }}">
+      <div class="as-header">
+        <span style="font-weight:700;color:{{ active_plan.rang_dark }}">
+          {{ active_plan.emoji }} {{ active_plan.nomi }} Obunasi
+        </span>
+        <span style="color:{{ active_plan.rang }};font-size:13px">
+          📅 {{ active_sub['expires_at'] }} gacha
+        </span>
+      </div>
+      <div class="as-limits">
+        <div class="limit-chip">
+          🎯 Joker:
+          {% if active_plan.joker_daily == -1 %}Cheksiz
+          {% else %}Kuniga {{ active_plan.joker_daily }} ta{% endif %}
+        </div>
+        <div class="limit-chip">
+          🔁 Qayta ishlash:
+          {% if active_plan.quiz_retry == -1 %}Cheksiz
+          {% else %}Kuniga {{ active_plan.quiz_retry }} marta{% endif %}
+        </div>
+        <div class="limit-chip">
+          🪙 Bonus: +{{ active_plan.bonus_coin }}/kun
+        </div>
+      </div>
+      <ul class="as-feats">
+        {% for f in active_plan.imtiyozlar %}
+        <li>✓ {{ f }}</li>
+        {% endfor %}
+      </ul>
+      <a href="/plans" class="btn btn-sm" style="background:{{ active_plan.rang }};color:#fff;margin-top:12px">
+        Yangilash yoki o'zgartirish
+      </a>
+    </div>
+
+    {% else %}
+    <div class="no-sub">
+      <div style="font-size:36px;margin-bottom:12px">👑</div>
+      <h3>Faol obuna yo'q</h3>
+      <p>Obuna olib, ko'proq joker va qayta ishlash imkoniyatiga ega bo'ling!</p>
+      <a href="/plans" class="btn btn-primary">Obuna tanlash →</a>
+    </div>
+    {% endif %}
+
+    <!-- Tezkor havolalar -->
+    <div class="quick-grid">
+      <a href="/plans" class="qcard">
+        <div class="qico">👑</div><div>Obuna rejalari</div>
+      </a>
+      <a href="https://t.me/{{ BOT_USERNAME }}" target="_blank" class="qcard">
+        <div class="qico">🤖</div><div>Botga qaytish</div>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container"><p>🇺🇿 O'zbekiston Ta'lim Boti</p></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>O'zbekiston Ta'lim — Obuna</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container hflex">
+    <div class="logo">🇺🇿 O'zbekiston Ta'lim</div>
+    <a href="https://t.me/{{ BOT_USERNAME }}" class="btn btn-outline" target="_blank">Botga o'tish →</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <h1>Bilim yig'ing,<br><span class="accent">Obuna oling!</span></h1>
+      <p class="hero-sub">Botda coin yig'ing → Saytda obuna sotib oling → Maxsus imtiyozlardan foydalaning.</p>
+
+      <div class="login-box">
+        <p class="lb-title">Telegram hisobingiz bilan kiring:</p>
+        <script async src="https://telegram.org/js/telegram-widget.js?22"
+          data-telegram-login="{{ BOT_USERNAME }}"
+          data-size="large"
+          data-auth-url="{{ SITE_URL }}/auth/telegram"
+          data-request-access="write">
+        </script>
+        <p class="lb-note">
+          Hali botda ro'yxat yo'qmi?
+          <a href="https://t.me/{{ BOT_USERNAME }}" target="_blank">@{{ BOT_USERNAME }}→ /start yuboring</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QANDAY ISHLAYDI -->
+  <section class="steps-section">
+    <div class="container">
+      <h2 class="sec-title">Qanday ishlaydi?</h2>
+      <div class="steps-grid">
+        <div class="step"><span class="step-n">1</span><div class="step-ico">🤖</div><h3>Botda quiz ishlang</h3><p>Har kuni 10/10 ball → 1000 coin. Joker bilan osonlashtiring.</p></div>
+        <div class="step"><span class="step-n">2</span><div class="step-ico">🌐</div><h3>Saytga kiring</h3><p>Telegram tugmasi bilan bir sekundda. Parol yo'q.</p></div>
+        <div class="step"><span class="step-n">3</span><div class="step-ico">👑</div><h3>Obuna tanlang</h3><p>Coinlaringizni sarflang, maxsus imtiyozlardan foydalaning.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBUNA REJALARI -->
+  <section class="plans-section">
+    <div class="container">
+      <h2 class="sec-title">Obuna Rejalari</h2>
+      <div class="plans-grid">
+
+        <!-- PRO -->
+        <div class="plan-card plan-pro">
+          <div class="plan-glow plan-glow-pro"></div>
+          <div class="plan-head">
+            <span class="plan-emoji">💙</span>
+            <span class="plan-name">Pro</span>
+          </div>
+          <div class="plan-price"><span class="pnum">1,000</span><span class="punit">🪙 / oy</span></div>
+          <ul class="plan-feats">
+            <li>🎯 Kuniga <b>20 ta</b> bepul joker</li>
+            <li>🔁 1 joyni <b>2 marta</b> qayta ishlash</li>
+            <li>🪙 Har kuni <b>+50 bonus coin</b></li>
+            <li>💙 Pro nishon profilda</li>
+          </ul>
+          <a href="#login" class="plan-btn btn-pro">Sotib olish</a>
+        </div>
+
+        <!-- PLUS -->
+        <div class="plan-card plan-plus plan-popular">
+          <div class="plan-glow plan-glow-plus"></div>
+          <div class="popular-badge">Mashhur</div>
+          <div class="plan-head">
+            <span class="plan-emoji">💜</span>
+            <span class="plan-name">Plus</span>
+          </div>
+          <div class="plan-price"><span class="pnum">1,500</span><span class="punit">🪙 / oy</span></div>
+          <ul class="plan-feats">
+            <li>🎯 Kuniga <b>50 ta</b> bepul joker</li>
+            <li>🔁 1 joyni <b>5 marta</b> qayta ishlash</li>
+            <li>🪙 Har kuni <b>+150 bonus coin</b></li>
+            <li>💜 Plus nishon profilda</li>
+            <li>🔓 Maxsus ma'lumotlar paketi</li>
+          </ul>
+          <a href="#login" class="plan-btn btn-plus">Sotib olish</a>
+        </div>
+
+        <!-- ULTRA PLUS -->
+        <div class="plan-card plan-ultra">
+          <div class="plan-glow plan-glow-ultra"></div>
+          <div class="ultra-badge">👑 Eng kuchli</div>
+          <div class="plan-head">
+            <span class="plan-emoji">👑</span>
+            <span class="plan-name">Ultra Plus</span>
+          </div>
+          <div class="plan-price"><span class="pnum">20,000</span><span class="punit">🪙 / oy</span></div>
+          <ul class="plan-feats">
+            <li>🎯 <b>Cheksiz</b> joker</li>
+            <li>🔁 <b>Cheksiz</b> qayta ishlash</li>
+            <li>🪙 Har kuni <b>+500 bonus coin</b></li>
+            <li>👑 Oltin nishon profilda</li>
+            <li>📞 Admin bilan to'g'ridan aloqa</li>
+            <li>🏆 Maxsus sertifikat va diplomlar</li>
+          </ul>
+          <a href="#login" class="plan-btn btn-ultra">Sotib olish</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>🇺🇿 O'zbekiston Ta'lim Boti &nbsp;|&nbsp;
+       <a href="https://t.me/{{ BOT_USERNAME }}" target="_blank">@{{ BOT_USERNAME }}</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
